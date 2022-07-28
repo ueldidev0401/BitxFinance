@@ -1,0 +1,321 @@
+.lock-process {
+    color: white;
+    font-size: 20px;
+}
+
+.Step-Box {
+    margin-top: 50px;
+    padding: 30px 30px 0px 30px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(112, 112, 112, 0.15);
+    border-radius: 5px;
+    color: #D3D3D3;
+
+    @media (max-width: 576px) {
+        padding: 20px;
+    }
+}
+
+.bitx-input {
+    // width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px 0 0 5px;
+    border: none;
+    padding: 8px 20px;
+    color: #D3D3D3;
+
+    &:hover,
+    &:focus {
+        outline: none;
+    }
+}
+
+.step-title {
+    font-size: 16px;
+}
+
+.token-info {
+    padding: 15px;
+    color: #8f8f8f;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid #05AB76;
+    border-radius: 5px;
+}
+
+.step-but {
+    padding: 8px 25px;
+    border-radius: 5px;
+    border: 1px solid #05AB76;
+    transition: .3s ease-in-out;
+
+    &:hover {
+        background: #05AB76;
+        color: black;
+        cursor: pointer;
+    }
+}
+
+.text-primary-color {
+    color: #05AB76;
+}
+
+.text-dark-color {
+    color: #a1a1a1;
+}
+
+.token-lock-chip {
+    margin-left: 15px;
+    border: 1px solid #05AB76;
+    border-radius: 3px;
+    background: #1E2027;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #05AB76;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+
+    &:hover {
+        background: #05ab76c4;
+        color: black;
+    }
+}
+
+.token-lock-chip-active {
+    margin-left: 15px;
+    border: 1px solid #05AB76;
+    border-radius: 3px;
+    background: #05ab76;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: black;
+    cursor: pointer;
+}
+
+.css-dmmspl-MuiFormGroup-root {
+    flex-direction: row !important;
+}
+
+.lock-mini-box {
+    background: #1E2027;
+    padding: 12px 25px;
+    border-radius: 5px;
+}
+
+.max-but {
+    padding: 6px 10px;
+    background: #05AB76;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: 0.15s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1);
+        color: black;
+    }
+
+    &:active {
+        transition: 0.1s ease-out;
+        transform: scale(1);
+    }
+}
+
+.token-ticker {
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 0 5px 5px 0;
+}
+
+.lock-state-box {
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #1E2027;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.mt-single {
+    margin-top: 10px;
+}
+
+.mt-linear {
+    margin-top: -130px;
+
+    @media (max-width: 992px) {
+        margin-top: 10px;
+    }
+}
+
+.mt-custom {
+    margin-top: 20px;
+}
+
+.bitlock-vesting-list-box {
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    // background: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+
+    color: "#ACACAC" !important;
+}
+
+/* responsive table*/
+
+.responsiveTable {
+    width: 100%;
+    font-size: 16px;
+}
+
+.responsiveTable td .tdBefore {
+    display: none;
+}
+
+.responsiveTable tr {
+    border-bottom: 1px solid rgba(112, 112, 112, 0.7);
+
+    &:hover {
+        background: #28292A;
+    }
+}
+
+.responsiveTable th {
+    padding: 15px;
+}
+
+.responsiveTable td {
+    padding: 10px;
+}
+
+@media screen and (max-width: 52em) {
+    /*
+      Force table elements to not behave like tables anymore
+      Hide table headers (but not display: none;, for accessibility)
+    */
+
+    .responsiveTable {
+        font-size: 14px;
+    }
+
+    .responsiveTable table,
+    .responsiveTable thead,
+    .responsiveTable tbody,
+    .responsiveTable th,
+    .responsiveTable td,
+    .responsiveTable tr {
+        display: block;
+        padding: 0px;
+    }
+
+    .responsiveTable thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+        border-bottom: 2px solid #333;
+    }
+
+    .responsiveTable tbody tr {
+        border: 1px solid #B5B5B5;
+        border-radius: 5px;
+        padding: .25em;
+        margin-bottom: 15px;
+    }
+
+    .responsiveTable td.pivoted {
+        /* Behave like a "row" */
+        border: none !important;
+        position: relative;
+        padding-left: calc(50% + 10px) !important;
+        text-align: left !important;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+    }
+
+    .responsiveTable td .tdBefore {
+        /* Now like a table header */
+        position: absolute;
+        display: block;
+
+        /* Top/left values mimic padding */
+        left: 1rem;
+        width: calc(50% - 20px);
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        text-align: left !important;
+        font-weight: 600;
+    }
+}
+
+.view-but {
+    background: #1E2027;
+    padding: 6px;
+    border-radius: 5px;
+    // width: 70px;
+    border: 1px solid #05AB76;
+    color: #05AB76;
+    text-align: center;
+
+    &:hover {
+        cursor: pointer;
+        background: #05AB76;
+        color: black;
+    }
+}
+
+.create-vesting-but {
+    background: #05AB76;
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #05AB76;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+
+    &:hover {
+        cursor: pointer;
+        background: #1E2027;
+    }
+}
+
+.css-1h7anqn {
+    display: table !important;
+}
+
+/* vault vesting */
+.vesting-info-box {
+    background-color: rgba(30, 32, 39, 0.3);
+    border: 1px solid rgba(109, 184, 160, 0.3);
+    border-radius: 5px;
+    padding: 25px;
+}
+
+.text-address {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    // overflow-wrap: break-word;
+}
+
+.progress {
+    height: 6px !important;
+    border-radius: 5px !important;
+
+    .progress-bar {
+        background-color: #05AB76 !important;
+        border-radius: 5px !important;
+    }
+}
+
+.lock-box {
+    padding: 20px;
+    color: white;
+    border: 1px solid;
+    border-color: rgba(112, 112, 112, 0.15);
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.15);
+
+    display: flex;
+}

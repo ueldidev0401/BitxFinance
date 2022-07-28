@@ -1,0 +1,29 @@
+.description-title {
+    font-family: "Microsoft JhengHei";
+    font-size: 25px;
+    font-weight: 600;
+    color: white;
+}
+
+.description-body {
+    font-family: "Microsoft JhengHei";
+    color: #707070;
+}
+
+.home-container {
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+    overflow: hidden;
+
+    @media (max-width: 576px) {
+        margin-top: 20px;
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .row {
+        row-gap: 20px;
+    }
+}

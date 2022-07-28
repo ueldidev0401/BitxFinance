@@ -1,0 +1,659 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "5f37001055c29982f4c27ee9edd90449c8e07774",
+            "commitDate": "2022-03-22",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (5f3700105 2022-03-22)"
+        },
+        "contractCrate": {
+            "name": "bitx-pass-nft-mint",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.30.0"
+        }
+    },
+    "name": "BitxPassNftMint",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "start_timestamp",
+                "type": "u64"
+            },
+            {
+                "name": "end_timestamp",
+                "type": "u64"
+            },
+            {
+                "name": "opt_payment_token_id",
+                "type": "optional<TokenIdentifier>",
+                "multi_arg": true
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "publicMint",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "adminMint",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "mint_count",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdrawFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_nonce",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "viewContractSetting",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "ContractSetting"
+                }
+            ]
+        },
+        {
+            "name": "viewCollectionSettings",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<CollectionSetting>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "viewUserAccount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<UserAccount>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "issueCollection",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "collection_ticker",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setLocalRoles",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "addCollectionMetadata",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_size",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_mint_allow_size",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_max_limit_per_address",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "collection_royalties",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "collection_tags",
+                    "type": "bytes"
+                },
+                {
+                    "name": "collection_image_uri",
+                    "type": "bytes"
+                },
+                {
+                    "name": "collection_metadata_uri",
+                    "type": "bytes"
+                },
+                {
+                    "name": "collection_metadata_no_https_uri",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getLastCollectionId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionName",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionIdentifer",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionSize",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionMintAllowSize",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionMaxLimitPerAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionPrice",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionRoyalties",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionTags",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionImageUri",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionMetadataUri",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionMetadataNoHttpsUri",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "getCollectionMintedCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionIncome",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionNftPurchasedCountPerWallet",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getCollectionNftPurchasedAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "getWhitelist",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "addWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "getStartTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "setStartTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "start_timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEndTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "setEndTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "end_timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "getPaymentTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "setPaymentTokenId",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "payment_token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        }
+    ],
+    "hasCallback": true,
+    "types": {
+        "CollectionSetting": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "collection_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_size",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_mint_allow_size",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_max_limit_per_address",
+                    "type": "u32"
+                },
+                {
+                    "name": "payment_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "collection_price",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "collection_minted_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_income",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "ContractSetting": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "start_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "end_timestamp",
+                    "type": "u64"
+                }
+            ]
+        },
+        "UserAccount": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "collection_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_nft_purchased_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "collection_max_limit_per_address",
+                    "type": "u32"
+                },
+                {
+                    "name": "is_whitelisted",
+                    "type": "bool"
+                }
+            ]
+        }
+    }
+}

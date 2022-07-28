@@ -1,0 +1,386 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "5f37001055c29982f4c27ee9edd90449c8e07774",
+            "commitDate": "2022-03-22",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (5f3700105 2022-03-22)"
+        },
+        "contractCrate": {
+            "name": "bitxfinance-ico",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.29.3"
+        }
+    },
+    "docs": [
+        "Manage ICO of a new ESDT"
+    ],
+    "name": "BitxfinanceIco",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "token_id",
+                "type": "TokenIdentifier"
+            },
+            {
+                "name": "token_price",
+                "type": "BigUint"
+            },
+            {
+                "name": "start_time",
+                "type": "u64"
+            },
+            {
+                "name": "end_time",
+                "type": "u64"
+            },
+            {
+                "name": "goal_in_esdt",
+                "type": "BigUint"
+            },
+            {
+                "name": "min_buy_limit",
+                "type": "BigUint"
+            },
+            {
+                "name": "max_buy_limit",
+                "type": "BigUint"
+            },
+            {
+                "name": "whitelist_presale_interval",
+                "type": "u64"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "docs": [
+                "endpoint - only owner"
+            ],
+            "name": "updateTokenId",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateTokenPrice",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateStartTime",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "start_time",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateEndTime",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "end_time",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateGoalInEsdt",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "goal_in_esdt",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateMinBuyLimit",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "min_buy_limit",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateMaxBuyLimit",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "max_buy_limit",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "updateWhitelistPresaleInterval",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "whitelist_presale_interval",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "withdraw",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "endpoint ///"
+            ],
+            "name": "buy",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "view ///"
+            ],
+            "name": "getStatus",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "tuple<Status,u64,BigUint,BigUint>"
+                }
+            ]
+        },
+        {
+            "name": "getAccountState",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "storage ///"
+            ],
+            "name": "getTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getTokenPrice",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getStartTime",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getEndTime",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getGoalInEsdt",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getMinBuyLimit",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getMaxBuyLimit",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getWhitelistPresaleInterval",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getWhitelist",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTotalBoughtAmountOfEgld",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getTotalBoughtAmountOfEsdt",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "Status": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "NotStarted",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Started",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Ended",
+                    "discriminant": 2
+                }
+            ]
+        }
+    }
+}

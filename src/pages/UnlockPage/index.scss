@@ -1,0 +1,110 @@
+.BITX_Wallet_wrapper {
+    background: #1E1F20 !important;
+    padding: 15px !important;
+    font-size: 19px !important;
+    border: none !important;
+    border-radius: 15px !important;
+    transition: all .4s ease-in-out;
+
+    height: 70px;
+
+    &:hover {
+        background: #7C7A4C !important;
+        transition: all .4s ease-in-out;
+    }
+
+    img {
+        width: 40px;
+    }
+
+    @media (max-width:576px) {
+        font-size: 17px !important;
+    }
+}
+
+.BITX_Wallet_noExtensionButtonWrapper {
+    background: #1E1F20 !important;
+    padding: 15px !important;
+    font-size: 19px !important;
+    border: none !important;
+    border-radius: 15px !important;
+    transition: all .4s ease-in-out;
+
+    height: 70px;
+    color: white !important;
+
+    margin-left: 1rem !important;
+    margin-right: 1rem !important;
+
+    &:hover {
+        background: #7C7A4C !important;
+        transition: all .4s ease-in-out;
+    }
+
+    img {
+        width: 40px;
+    }
+
+    @media (max-width:576px) {
+        font-size: 17px !important;
+    }
+
+    @media (max-width:576px) {
+        margin-left: 0.2rem !important;
+        margin-right: 0.2rem !important;
+    }
+}
+
+.card {
+    padding: 25px !important;
+    border-radius: 10px !important;
+}
+
+.wallet-extension {
+    gap: 20px;
+    padding-left: 25%;
+
+    @media (max-width:576px) {
+        padding-left: 15%;
+    }
+}
+
+.wallet-web {
+    gap: 22px;
+    padding-left: 24%;
+
+    @media (max-width:576px) {
+        padding-left: 14%;
+    }
+}
+
+.wallet-ledger {
+    gap: 25px;
+    padding-left: 25%;
+
+    @media (max-width:576px) {
+        padding-left: 16%;
+    }
+}
+
+.wallet-mobile {
+    gap: 28px;
+    padding-left: 27%;
+
+    @media (max-width:576px) {
+        padding-left: 19%;
+    }
+}
+
+.maiar {
+    width: 20%;
+    position: absolute;
+    top: 84%;
+    left: 76%;
+
+    @media (max-width: 576px) {
+        width: 28%;
+        top: 85%;
+        left: 70%;
+    }
+}

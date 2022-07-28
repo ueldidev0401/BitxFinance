@@ -1,0 +1,27 @@
+/* staking small card css */
+
+.staking-small-card {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid  rgba(112, 112, 112,0.15);
+    padding: 30px;
+    background: rgba(0,0,0,0.3);
+    transition: 0.5s all ease-in-out;
+
+    &:hover {
+        border: 1px solid yellow;
+        cursor: pointer;
+        transform: translatey(-10px);
+    }
+}
+
+.header-png-group {
+    display: "flex";
+    text-align: center;
+}
+
+a {
+    &:hover {
+        text-decoration: none !important;
+    }
+}
