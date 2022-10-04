@@ -27,7 +27,7 @@
     "start": "react-scripts start",
     "start-testnet": "npm run copy-testnet-config & npm run start",
     "start-devnet": "npm run copy-devnet-config & npm run start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "build-testnet": "npm run copy-testnet-config & npm run build",
     "build-devnet": "npm run copy-devnet-config & npm run build",
     "test": "react-scripts test",
