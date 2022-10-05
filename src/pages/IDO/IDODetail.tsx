@@ -44,7 +44,7 @@ import {
     getPrice
 } from 'utils';
 import { routeNames } from 'routes';
-import emptyLogo from 'assets/img/token logos/empty.png';
+import emptyLogo from 'assets/img/token logos/New Project.png';
 
 const IDODetail = () => {
     interface Props {

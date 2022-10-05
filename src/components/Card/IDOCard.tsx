@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ProgressBar } from 'react-bootstrap';
 import Countdown from 'react-countdown';
 import { swtichSocialIcon } from 'utils/social';
-import emptyLogo from 'assets/img/token logos/empty.png';
+import emptyLogo from 'assets/img/token logos/New Project.png';
 import EGLD_logo from 'assets/img/token logos/EGLD.png';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
