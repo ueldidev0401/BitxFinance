@@ -1,27 +1,88 @@
 /* staking small card css */
 
 .staking-small-card {
-    width: 100%;
-    border-radius: 5px;
-    border: 1px solid  rgba(112, 112, 112,0.15);
-    padding: 30px;
-    background: rgba(0,0,0,0.3);
-    transition: 0.5s all ease-in-out;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid rgba(112, 112, 112, 0.15);
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.3);
+  transition: 0.5s all ease-in-out;
 
-    &:hover {
-        border: 1px solid yellow;
-        cursor: pointer;
-        transform: translatey(-10px);
-    }
+  &:hover {
+    border: 1px solid yellow;
+    cursor: pointer;
+    transform: translatey(-10px);
+  }
 }
 
 .header-png-group {
-    display: "flex";
-    text-align: center;
+  display: "flex";
+  text-align: center;
 }
 
 a {
-    &:hover {
-        text-decoration: none !important;
+  &:hover {
+    text-decoration: none !important;
+  }
+}
+
+.IDO-Card-box {
+  border: 1px solid #6a9b84;
+  padding: 35px;
+  border-radius: 10px;
+  color: #BCBCBC;
+  background: rgba(0, 0, 0, 0.15);
+
+  .progress {
+    height: 6px !important;
+    border-radius: 5px !important;
+
+    .progress-bar {
+      background-color: #6a9b84 !important;
+      border-radius: 5px !important;
+      box-shadow: 0 0 15px #6a9b84;
     }
+  }
+}
+
+.IDO-Card-title {
+  font-family: "Comic Sans MS";
+  font-weight: 500;
+  font-size: 24px;
+  color: white;
+}
+
+.IDO-Card-token-identifier {
+  font-family: "Segoe UI";
+  font-size: 20px;
+  font-weight: 500;
+  color: #919191;
+}
+
+.social-box {
+  display: flex;
+  color: white;
+  font-size: 20px;
+  column-gap: 15px;
+  row-gap: 8px;
+}
+
+.IDO-prize {
+  color: #6a9b84;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.IDO-Card-Countdown {
+  color: #6a9b84;
+  font-size: 18px;
+}
+
+.social-link {
+  color: white;
+
+  z-index: 1001;
+  &:hover {
+    color: #6a9b84 !important;
+  }
 }

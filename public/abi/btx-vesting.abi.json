@@ -1,0 +1,597 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.62.0-nightly",
+            "commitHash": "69a5d2481e856a5a18885390b8cf6950b9ff8dd3",
+            "commitDate": "2022-04-27",
+            "channel": "Nightly",
+            "short": "rustc 1.62.0-nightly (69a5d2481 2022-04-27)"
+        },
+        "contractCrate": {
+            "name": "btx-vesting",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.30.0"
+        }
+    },
+    "name": "BtxVesting",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "treasury_address",
+                "type": "Address"
+            },
+            {
+                "name": "wegld_token_id",
+                "type": "TokenIdentifier"
+            },
+            {
+                "name": "wegld_min_fee",
+                "type": "BigUint"
+            },
+            {
+                "name": "wegld_base_fee",
+                "type": "BigUint"
+            },
+            {
+                "name": "lock_token_fee",
+                "type": "u64"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "withdrawFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_nonce",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "viewLockSetting",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "LockSetting"
+                }
+            ]
+        },
+        {
+            "name": "viewLock",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Lock"
+                }
+            ]
+        },
+        {
+            "name": "viewLocks",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Lock>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "createLock",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "receiver_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "lock_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "lock_purpose",
+                    "type": "bytes"
+                },
+                {
+                    "name": "lock_release_timestamps",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "lock_release_percentages",
+                    "type": "List<u64>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "adminCreateLock",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "receiver_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "lock_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "lock_purpose",
+                    "type": "bytes"
+                },
+                {
+                    "name": "lock_release_timestamps",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "lock_release_percentages",
+                    "type": "List<u64>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimLock",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getLastLockId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getLockerAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getReceiverAddress",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getLockName",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getLockPurpose",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getLockTokenId",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getLockTokenAmount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getLockReleaseCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getLockReleaseTimestamps",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "release_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getLockReleasePercentages",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "release_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getLockClaimedReleaseCount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getLockReleaseClaimedTimestamps",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "release_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getLockCreationTimestamp",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getTotalLockedTokens",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<TokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTreasuryAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "setTreasuryAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "treasury_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getWegldTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "setWegldTokenId",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wegld_token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getWegldMinFee",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "setWegldMinFee",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wegld_min_fee",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getWegldBaseFee",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "setWegldBaseFee",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wegld_base_fee",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getLockTokenFee",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "setLockTokenFee",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "lock_token_fee",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "Lock": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "lock_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "locker_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "receiver_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "lock_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "lock_purpose",
+                    "type": "bytes"
+                },
+                {
+                    "name": "lock_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "lock_token_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "lock_release_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "lock_release_timestamps",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "lock_release_percentages",
+                    "type": "List<u64>"
+                },
+                {
+                    "name": "lock_release_amounts",
+                    "type": "List<BigUint>"
+                },
+                {
+                    "name": "lock_left_release_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "lock_left_claimable_release_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "lock_creation_timestamp",
+                    "type": "u64"
+                }
+            ]
+        },
+        "LockSetting": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "total_locked_token_ids",
+                    "type": "List<TokenIdentifier>"
+                },
+                {
+                    "name": "total_locked_token_amounts",
+                    "type": "List<BigUint>"
+                },
+                {
+                    "name": "total_lock_count",
+                    "type": "u32"
+                },
+                {
+                    "name": "wegld_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "wegld_min_fee",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "wegld_base_fee",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "lock_token_fee",
+                    "type": "u64"
+                }
+            ]
+        }
+    }
+}

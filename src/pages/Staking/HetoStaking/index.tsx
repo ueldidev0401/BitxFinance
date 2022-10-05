@@ -3,7 +3,7 @@ import BTX2HETO from './Bitx2Heto';
 import Heto2Heto from './Heto2Heto';
 
 
-const MareStaking = () => {
+const HetoStaking = () => {
     return (
         <div className='bitxwrapper'>
             <div className='container'>
@@ -14,4 +14,4 @@ const MareStaking = () => {
     );
 };
 
-export default MareStaking;
+export default HetoStaking;

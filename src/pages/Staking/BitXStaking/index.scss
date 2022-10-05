@@ -310,9 +310,11 @@
   gap: 20px;
   justify-content: center;
   padding: 1rem 0px;
-  background-color: #141414;
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 3px;
   border: none !important;
+
+  z-index: 0;
 
   p {
     margin: 0px;
@@ -328,7 +330,7 @@
   transition: background-color .4s ease-in;
 
   &:hover {
-    background-color: #2b2b2bcc;
+    background-color: gray;
   }
 }
 
@@ -350,6 +352,8 @@
   border-radius: 8px;
   color: #D9D9D9;
   font-family: 'Segoe UI';
+  z-index: 9999 !important;
+  // position: relative;
 }
 
 @media (max-width: 576px) {
@@ -524,7 +528,7 @@ input::-webkit-inner-spin-button {
   }
 
   // height: 100%;
-  // z-index: -1;
+  // z-index: 0;
 }
 
 ////////////
@@ -563,4 +567,9 @@ input::-webkit-inner-spin-button {
   border-radius: 5px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
+}
+
+.stake-modal-input-percentage {
+  padding: .6rem 1rem .6rem .8rem;
+  font-size: 1.1rem;
 }

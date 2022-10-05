@@ -1,0 +1,277 @@
+.first-section {
+  background-image: url("../../assets/img/ido/cloud.png");
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  min-height: 110vh;
+}
+
+.ido-title {
+  font-family: "Microsoft JhengHei";
+  font-size: 46px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 1px 3px 6px #181818;
+  text-align: center;
+
+  @media (max-width: 576px) {
+    font-size: 38px;
+  }
+}
+
+.ido-description {
+  width: 90%;
+  color: #707070;
+  text-align: center;
+  font-size: 16px;
+
+  @media (max-width: 576px) {
+    width: 100%;
+  }
+}
+
+.ido-anounce-card {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(112, 112, 112, 0.3);
+  border-radius: 10px;
+  padding: 20px 35px;
+
+  display: flex;
+  align-items: center;
+
+  span {
+    color: #bebebe;
+    font-size: 18px;
+    font-family: "Segoe UI";
+    font-weight: 500;
+  }
+}
+
+.ido-input {
+  width: 100%;
+  // background-color: #131415;
+  background-color: #181A1F;
+  border-radius: 5px;
+  border: 1px solid #6a9b84;
+  padding: 7px 12px;
+  color: #d3d3d3;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+.ido-container {
+  margin-left: 10%;
+  margin-right: 10%;
+  overflow: hidden;
+
+  @media (max-width: 576px) {
+    margin-top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
+.rw-widget-input {
+  background-color: #131415 !important;
+  border: 1px solid #6a9b84 !important;
+  color: #d3d3d3 !important;
+  border-radius: 5px !important;
+
+  &:hover,
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.rw-popup {
+  background-color: #131415 !important;
+  border: 1px solid #6a9b84 !important;
+}
+
+.rw-list-option {
+  color: #d3d3d3 !important;
+
+  &:hover {
+    background-color: #6a9b8460 !important;
+    border: none !important;
+    color: white !important;
+  }
+}
+
+.rw-state-selected {
+  background-color: #6a9b84 !important;
+  border: none !important;
+}
+
+.rw-picker-caret {
+  color: #6a9b84 !important;
+}
+
+.ido-but {
+  background-color: #131415;
+  border-radius: 5px;
+  border: 1px solid #6a9b84;
+  padding: 8px;
+  color: #6a9b84;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background-color: #6a9b84;
+    color: white;
+  }
+}
+
+.table-social-box {
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  column-gap: 5px;
+  row-gap: 8px;
+}
+
+.ido-custom-timer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  .ido-customer-timer-time {
+    font-size: 1.2rem;
+    font-family: 'Segoe UI';
+
+    background: #875775;
+    padding: 5px 10px;
+    border-radius: 3px;
+  }
+}
+
+.connect-but-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+  padding: 16px 30px;
+}
+
+.ido-card-but {
+  border-radius: 5px;
+  background: #6a9b84;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  font-size: 14px;
+  transition: 0.2s all ease-in-out;
+
+  &:hover {
+    background: #875775;
+  }
+}
+
+.ido-card-buy-but {
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: white;
+  padding: 8px 22px;
+  font-size: 14px;
+  transition: 0.2s all ease-in-out;
+
+  &:hover {
+    background: #6a9b84;
+  }
+}
+
+.IDOCard-link {
+  // cursor: pointer;
+  transition: .3s all ease-in-out;
+
+  &:hover {
+    transform: translatey(-10px);
+  }
+}
+
+.ido-create-next-but {
+  background: rgba(255, 255, 255, 0.12);
+  color: #C2C2C2;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  transition: .3s all ease-in-out;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+}
+
+.ido-create-back-but {
+  background: rgba(141, 133, 133, 0.8);
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  transition: .3s all ease-in-out;
+
+  &:hover {
+    background: rgba(141, 133, 133, 0.5);
+    color: black;
+  }
+}
+
+.input-comment {
+  font-size: 12px;
+  color: #2996B8;
+}
+
+.input-state {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.ido-launched-box {
+  background-image: url('../../assets/img/ido/success.png');
+  background-size: cover;
+  min-height: 90vh;
+}
+
+.congratulations-img {
+  width: 50%;
+
+  @media (max-width: 960px) {
+    width: 70%;
+  }
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+
+  @media (max-width: 576px) {
+    width: 90%;
+  }
+}
+
+.ido-create-but {
+  background-image: linear-gradient(to right, #BF953F, #FCF6BA, #B38728);
+  padding: 11px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 5px;
+  color: rgb(44, 44, 44);
+  transition: background-image .3s ease-in-out;
+
+  &:hover {
+    background-image: linear-gradient(to right, #bd8d2d, #f8ef87, #af7e15);
+    color: rgb(22, 22, 22);
+  }
+}

@@ -22,6 +22,7 @@ import {
   ArgSerializer,
   GasLimit,
   DefaultSmartContractController,
+  U64Value,
 } from '@elrondnetwork/erdjs';
 
 import axios from 'axios';
@@ -31,28 +32,31 @@ import btxLogo from 'assets/img/BTX logo.png';
 import coin from 'assets/img/coin.png';
 import elrondLogo from 'assets/img/Elrond logo.png';
 import MexLogo from 'assets/img/mex-logo.svg';
-import AlertModal from '../../../components/AlertModal';
+import AlertModal from 'components/AlertModal';
+
 import {
   BTX2MEX_CONTRACT_ADDRESS,
   BTX2MEX_CONTRACT_ABI,
   BTX2MEX_CONTRACT_NAME,
   BTX_TOKEN_TICKER,
   BTX_TOKEN_ID,
-} from '../../../config';
+  BTX_TOKEN_DECIMALS,
+  MEX_TOKEN_DECIMALS,
+} from 'config';
 
 import {
   SECOND_IN_MILLI,
   TIMEOUT,
   convertWeiToEsdt,
+  convertTimestampToDays,
   convertTimestampToDateTime,
   convertSecondsToDays,
   IContractInteractor,
-  IBtx2MexStakeSetting,
-  IStakeAccount,
-} from '../../../utils';
+  getBalanceOfToken,
+} from 'utils';
 
 const Bitx2Mex = () => {
-  const { account } = useGetAccountInfo();
+  const { account, address } = useGetAccountInfo();
   const { network } = useGetNetworkConfig();
   const { hasPendingTransactions } = useGetPendingTransactions();
   const provider = new ProxyProvider(network.apiAddress, { timeout: TIMEOUT });
@@ -63,8 +67,8 @@ const Bitx2Mex = () => {
 
 
   const [stakeContractInteractor, setStakeContractInteractor] = React.useState<IContractInteractor | undefined>();
-  const [stakeSetting, setStakeSetting] = React.useState<IBtx2MexStakeSetting | undefined>();
-  const [stakeAccount, setStakeAccount] = React.useState<IStakeAccount | undefined>();
+  const [stakeSetting, setStakeSetting] = React.useState<any>();
+  const [stakeAccount, setStakeAccount] = React.useState<any>();
 
   const [balance, setBalance] = React.useState<any>(undefined);
 
@@ -77,24 +81,10 @@ const Bitx2Mex = () => {
   // load smart contract abi and parse it to SmartContract object for tx
   React.useEffect(() => {
     (async () => {
-      // const abiRegistry = await AbiRegistry.load({
-      //     urls: [BTX2MEX_CONTRACT_ABI],
-      // });
-      // const contract = new SmartContract({
-      //     address: new Address(BTX2MEX_CONTRACT_ADDRESS),
-      //     abi: new SmartContractAbi(abiRegistry, [BTX2MEX_CONTRACT_NAME]),
-      // });
-      // setStakingContract(contract);
-
       const registry = await AbiRegistry.load({ urls: [BTX2MEX_CONTRACT_ABI] });
       const abi = new SmartContractAbi(registry, [BTX2MEX_CONTRACT_NAME]);
       const contract = new SmartContract({ address: new Address(BTX2MEX_CONTRACT_ADDRESS), abi: abi });
       const controller = new DefaultSmartContractController(abi, provider);
-
-      // console.log('stakeContractInteractor', {
-      //   contract,
-      //   controller,
-      // });
 
       setStakeContractInteractor({
         contract,
@@ -107,27 +97,21 @@ const Bitx2Mex = () => {
   React.useEffect(() => {
     (async () => {
       if (!stakeContractInteractor) return;
-      // const interaction: Interaction = stakingContract.methods.getCurrentStakeSetting();
-      // const queryResponse = await stakingContract.runQuery(proxy, interaction.buildQuery());
-      // const res = interaction.interpretQueryResponse(queryResponse);
-
-      const interaction = stakeContractInteractor.contract.methods.getCurrentStakeSetting();
+      const interaction = stakeContractInteractor.contract.methods.viewStakeSetting();
       const res = await stakeContractInteractor.controller.query(interaction);
 
       if (!res || !res.returnCode.isSuccess()) return;
       const value = res.firstValue.valueOf();
 
-      // console.log('getCurrentStakeSetting', value);
-
       const stake_token = value.stake_token.toString();
       const reward_token = value.reward_token.toString();
-      const min_stake_limit = convertWeiToEsdt(value.min_stake_limit);
-      const max_stake_limit = convertWeiToEsdt(value.max_stake_limit);
-      const lock_period = value.lock_period.toNumber();
-      const undelegation_period = value.undelegation_period.toNumber();
-      const claim_lock_period = value.claim_lock_period.toNumber();
+      const min_stake_limit = convertWeiToEsdt(value.min_stake_limit, BTX_TOKEN_DECIMALS);
+      const max_stake_limit = convertWeiToEsdt(value.max_stake_limit, BTX_TOKEN_DECIMALS);
+      const lock_period = value.lock_period.toNumber() * SECOND_IN_MILLI;
+      const undelegation_period = value.undelegation_period.toNumber() * SECOND_IN_MILLI;
+      const claim_lock_period = value.claim_lock_period.toNumber() * SECOND_IN_MILLI;
       const apr = value.apr.toNumber() / 100;
-      const total_staked_amount = convertWeiToEsdt(value.total_staked_amount);
+      const total_staked_amount = convertWeiToEsdt(value.total_staked_amount, BTX_TOKEN_DECIMALS);
       const number_of_stakers = value.number_of_stakers.toNumber();
 
       const result = {
@@ -143,7 +127,7 @@ const Bitx2Mex = () => {
         number_of_stakers,
       };
 
-      // console.log('BTX2MEX getCurrentStakeSetting', result);
+      // console.log('BTX2MEX viewStakeSetting', result);
 
       setStakeSetting(result);
     })();
@@ -152,65 +136,45 @@ const Bitx2Mex = () => {
 
   React.useEffect(() => {
     (async () => {
-      if (!stakeContractInteractor || !account.address || hasPendingTransactions) return;
-      // const args = [new AddressValue(new Address(account.address))];
-      // const interaction: Interaction = stakingContract.methods.getCurrentStakeAccount(args);
-      // const queryResponse = await stakingContract.runQuery(proxy, interaction.buildQuery());
-      // const res = interaction.interpretQueryResponse(queryResponse);
-
+      if (!stakeContractInteractor || !account.address) return;
       const args = [new AddressValue(new Address(account.address))];
-      const interaction = stakeContractInteractor.contract.methods.getCurrentStakeAccount(args);
+      const interaction = stakeContractInteractor.contract.methods.viewStakeAccount(args);
       const res = await stakeContractInteractor.controller.query(interaction);
 
       if (!res || !res.returnCode.isSuccess()) return;
       const value = res.firstValue.valueOf();
 
-      // console.log('getCurrentStakeAccount', value);
-
       const address = value.address.toString();
-      const staked_amount = convertWeiToEsdt(value.staked_amount);
-      const lock_end_timestamp = value.lock_end_timestamp.toNumber();
-      const unstaked_amount = convertWeiToEsdt(value.unstaked_amount);
-      const undelegation_end_timestamp = value.undelegation_end_timestamp.toNumber();
-      const collectable_amount = convertWeiToEsdt(value.collectable_amount);
-      const reward_amount = convertWeiToEsdt(value.reward_amount);
-      const last_claim_timestamp = value.last_claim_timestamp.toNumber();
+      const staked_amount = convertWeiToEsdt(value.staked_amount, BTX_TOKEN_DECIMALS);
+      const last_stake_timestamp = value.last_stake_timestamp.toNumber() * SECOND_IN_MILLI;
+      const unstaked_amount = convertWeiToEsdt(value.unstaked_amount, BTX_TOKEN_DECIMALS);
+      const last_unstake_timestamp = value.last_unstake_timestamp.toNumber() * SECOND_IN_MILLI;
+      const collectable_amount = convertWeiToEsdt(value.collectable_amount, BTX_TOKEN_DECIMALS);
+      const reward_amount = convertWeiToEsdt(value.reward_amount, MEX_TOKEN_DECIMALS);
+      const last_claim_timestamp = value.last_claim_timestamp.toNumber() * SECOND_IN_MILLI;
 
       const result = {
         address,
         staked_amount,
-        lock_end_timestamp,
+        last_stake_timestamp,
         unstaked_amount,
-        undelegation_end_timestamp,
+        last_unstake_timestamp,
         collectable_amount,
         reward_amount,
         last_claim_timestamp,
       };
 
-      // console.log('BTX2MEX getCurrentStakeAccount', result);
+      // console.log('BTX2MEX viewStakeAccount', result);
       setStakeAccount(result);
     })();
   }, [account, stakeContractInteractor, hasPendingTransactions]);
 
 
   React.useEffect(() => {
-    if (account.address && !hasPendingTransactions) {
-      axios.get(`${network.apiAddress}/accounts/${account.address}/tokens?search=${BTX_TOKEN_TICKER}`).then((res: any) => {
-        let _balance = 0;
-        if (res.data?.length > 0) {
-          const tokens = res.data.filter(
-            (a: any) => a?.identifier === BTX_TOKEN_ID
-          );
+    if (!address) return;
+    getBalanceOfToken(network.apiAddress, account, BTX_TOKEN_ID).then((v) => setBalance(v));
+  }, [address, hasPendingTransactions]);
 
-          if (tokens.length > 0) {
-            // console.log('tokens[0]', tokens[0]);
-            _balance = convertWeiToEsdt(tokens[0].balance);
-          }
-        }
-        setBalance(_balance);
-      });
-    }
-  }, [account, hasPendingTransactions]);
 
   function onShowStakeModal() {
     if (!account.address) {
@@ -238,31 +202,31 @@ const Bitx2Mex = () => {
     setShowModal(true);
   }
 
-  function onModalInputAmountChange(value: number) {
-    if (!account.address || !stakeAccount) return;
+  function onModalInputAmountChange(v: any) {
+    if (!account.address || !stakeSetting || !stakeAccount) return;
 
+    const value = Number(v);
     let _modalInfoMesssage = '';
     let _modalButtonDisabled = true;
     const currentTimestamp = (new Date()).getTime();
 
     if (isStakeModal) { // stake
-      if (value > balance) {
+      if (value <= 0) {
+        _modalInfoMesssage = 'Invalid amount.';
+      } else if (value > balance) {
         _modalInfoMesssage = 'Not enough tokens in your wallet.';
-      } else if (value + stakeAccount.staked_amount < stakeSetting.min_stake_limit) {
-        _modalInfoMesssage = `Cannot stake less than ${stakeSetting.min_stake_limit} ${BTX_TOKEN_TICKER} in total.`;
-      } else if (value + stakeAccount.staked_amount > stakeSetting.max_stake_limit) {
-        // console.log('value + stakeAccount.staked_amount > stakeSetting.max_stake_limit', value, stakeAccount.staked_amount, stakeSetting.max_stake_limit);
-        _modalInfoMesssage = `Cannot stake more than ${stakeSetting.max_stake_limit} ${BTX_TOKEN_TICKER} in total.`;
+      } else if (value < stakeSetting.min_stake_limit) {
+        _modalInfoMesssage = `Cannot stake less than ${stakeSetting.min_stake_limit} ${BTX_TOKEN_TICKER}.`;
+      } else if (stakeSetting.max_stake_limit > 0 && stakeAccount.staked_amount + value > stakeSetting.max_stake_limit) {
+        _modalInfoMesssage = `Cannot stake more than ${stakeSetting.max_stake_limit - stakeAccount.staked_amount} ${BTX_TOKEN_TICKER}.`;
       } else {
         _modalButtonDisabled = false;
       }
     } else {  // unstake
-      if (value > stakeAccount.staked_amount) {
-        _modalInfoMesssage = 'Cannot unstake more than staked amount.';
-      } else if (value <= 0) {
+      if (value <= 0 || value > 100) {
         _modalInfoMesssage = 'Invalid amount.';
-      } else if (currentTimestamp < stakeAccount.lock_end_timestamp * SECOND_IN_MILLI) {
-        _modalInfoMesssage = `Cannot unstake before ${convertTimestampToDateTime(stakeAccount.lock_end_timestamp * SECOND_IN_MILLI)}`;
+      } else if (currentTimestamp < stakeAccount.last_stake_timestamp + stakeSetting.lock_period) {
+        _modalInfoMesssage = `Cannot unstake before ${convertTimestampToDateTime(stakeAccount.last_stake_timestamp + stakeSetting.lock_period)}`;
       } else {
         _modalButtonDisabled = false;
       }
@@ -270,11 +234,11 @@ const Bitx2Mex = () => {
 
     setModalInfoMesssage(_modalInfoMesssage);
     setModalButtonDisabled(_modalButtonDisabled);
-    setModalInputAmount(value);
+    setModalInputAmount(v);
   }
 
   function onModalMaximize() {
-    const value = isStakeModal ? balance : stakeAccount.staked_amount;
+    const value = isStakeModal ? balance : 100;
     onModalInputAmountChange(value);
   }
 
@@ -282,14 +246,7 @@ const Bitx2Mex = () => {
     setAlertModalText(text);
     setAlertModalShow(true);
   }
-  async function stake(e: any) {
-    e.preventDefault();
-
-    if (balance == 0) {
-      onShowAlertModal(`You don\'t have ${BTX_TOKEN_TICKER} in your wallet.`);
-      return;
-    }
-
+  async function stake() {
     const args: TypedValue[] = [
       BytesValue.fromUTF8(BTX_TOKEN_ID),
       new BigUIntValue(Egld(modalInputAmount).valueOf()),
@@ -312,16 +269,9 @@ const Bitx2Mex = () => {
     setShowModal(false);
   }
 
-  async function unstake(e: any) {
-    e.preventDefault();
-
-    if (stakeAccount.staked_amount == 0) {
-      onShowAlertModal('You don\'t have staked tokens.');
-      return;
-    }
-
+  async function unstake() {
     const args: TypedValue[] = [
-      new BigUIntValue(Egld(modalInputAmount).valueOf()),
+      new U64Value(Math.floor(modalInputAmount * 100)),
     ];
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `unstake@${argumentsString}`;
@@ -339,9 +289,7 @@ const Bitx2Mex = () => {
     setShowModal(false);
   }
 
-  async function claim(e: any) {
-    e.preventDefault();
-
+  async function claim() {
     if (!account.address) {
       onShowAlertModal('You should connect your wallet first!');
       return;
@@ -353,10 +301,8 @@ const Bitx2Mex = () => {
     }
 
     const currentTimestamp = (new Date()).getTime();
-    const claimLockEndTimestamp = (stakeAccount.last_claim_timestamp + stakeSetting.claim_lock_period) * SECOND_IN_MILLI;
-    // console.log(`currentTimestamp: ${currentTimestamp} ----- claimLockEndTimestamp: ${claimLockEndTimestamp}`);
-    if (currentTimestamp < claimLockEndTimestamp) {
-      onShowAlertModal(`Cannot claim before ${convertTimestampToDateTime(claimLockEndTimestamp)}`);
+    if (currentTimestamp < stakeAccount.last_claim_timestamp + stakeSetting.claim_lock_period) {
+      onShowAlertModal(`Cannot claim before ${convertTimestampToDateTime(stakeAccount.last_claim_timestamp + stakeSetting.claim_lock_period)}`);
       return;
     }
 
@@ -395,10 +341,6 @@ const Bitx2Mex = () => {
           <p className='data'>{stakeSetting ? stakeSetting.apr : '-'} %</p>
         </div>
         <div>
-          <p className='heading'>APY</p>
-          <p className='data'>{"NULL"}</p>
-        </div>
-        <div>
           <p className='heading'>Total Staked</p>
           <p className='data'>{stakeSetting ? stakeSetting.total_staked_amount : '-'} {BTX_TOKEN_TICKER}</p>
         </div>
@@ -412,11 +354,11 @@ const Bitx2Mex = () => {
         <div className='info'>
           <div>
             <p className='heading'>Lock</p>
-            <p className='data'>{"5 Days"}</p>
+            <p className='data'>{stakeSetting && convertTimestampToDays(stakeSetting.lock_period)}{" Days"}</p>
           </div>
           <div>
             <p className='heading'>Undelegation</p>
-            <p className='data'>{"5 Days"}</p>
+            <p className='data'>{stakeSetting && convertTimestampToDays(stakeSetting.undelegation_period)}{" Days"}</p>
           </div>
         </div>
       </div>
@@ -483,8 +425,8 @@ const Bitx2Mex = () => {
         <p className='modal-description'>
           {
             showModal && stakeSetting && (isStakeModal ?
-              `Your tokens will be locked for ${convertSecondsToDays(stakeSetting.lock_period)} days after deposit (even the tokens that are already staked)`
-              : `Your tokens will be undelegated for ${convertSecondsToDays(stakeSetting.undelegation_period)} days after unstake (even the tokens that are already unstaked)`)
+              `Your tokens will be locked for ${convertTimestampToDays(stakeSetting.lock_period)} days after deposit (even the tokens that are already staked)`
+              : `Your tokens will be undelegated for ${convertTimestampToDays(stakeSetting.undelegation_period)} days after unstake (even the tokens that are already unstaked)`)
           }
         </p>
         <div className='modal-divider'></div>
@@ -501,16 +443,19 @@ const Bitx2Mex = () => {
           <span>&nbsp;{BTX_TOKEN_TICKER}</span>
         </div>
         <h6 className='modal-info-1'>
-          {isStakeModal ? 'Amount to Stake' : 'Amount to Unstake'}
+          {isStakeModal ? 'Amount to Stake' : 'Percentage to Unstake'}
         </h6>
         <div className='modal-div-1'>
           <input className='modal-input-1'
-            placeholder='Amount'
+            placeholder={isStakeModal ? 'Amount' : 'Percentage'}
             type='number'
-            min='0'
+            step={0.01}
             value={modalInputAmount}
-            onChange={(e) => onModalInputAmountChange(parseFloat(e.target.value))}
+            onChange={(e) => onModalInputAmountChange(e.target.value)}
           />
+          {
+            !isStakeModal && (<span className='stake-modal-input-percentage'>%</span>)
+          }
           <button className='maximize-button'
             onClick={onModalMaximize}
           >

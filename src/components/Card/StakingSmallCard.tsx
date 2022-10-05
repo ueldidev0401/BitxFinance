@@ -16,8 +16,12 @@ import {
     convertWeiToEsdt,
     convertAPR2APY,
     IContractInteractor,
-    IBtx2BtxStakeSetting,
-} from '../../utils';
+} from 'utils';
+import {
+    BTX2BTX_CONTRACT_NAME,
+    BTX2MEX_CONTRACT_NAME,
+    CPA2CPA_CONTRACT_NAME,
+} from 'config';
 import { logo, contractABI, contractAddress, contractName, tokenDecimal } from './data';
 
 type IStakingProps = {
@@ -33,7 +37,7 @@ const StakingSmallCard = (props: IStakingProps) => {
     const provider = new ProxyProvider(network.apiAddress, { timeout: TIMEOUT });
 
     const [stakeContractInteractor, setStakeContractInteractor] = React.useState<IContractInteractor | undefined>();
-    const [stakeSetting, setStakeSetting] = React.useState<IBtx2BtxStakeSetting | undefined>();
+    const [stakeSetting, setStakeSetting] = React.useState<any>();
 
     React.useEffect(() => {
         (async () => {
@@ -51,7 +55,12 @@ const StakingSmallCard = (props: IStakingProps) => {
             if (!stakeContractInteractor)
                 return;
 
-            const interaction = stakeContractInteractor.contract.methods.getCurrentStakeSetting();
+            let interaction;
+            if (contractName[stakeKey] == BTX2BTX_CONTRACT_NAME || contractName[stakeKey] == BTX2MEX_CONTRACT_NAME || contractName[stakeKey] == CPA2CPA_CONTRACT_NAME) {
+                interaction = stakeContractInteractor.contract.methods.viewStakeSetting();
+            } else {
+                interaction = stakeContractInteractor.contract.methods.getCurrentStakeSetting();
+            }
             const res = await stakeContractInteractor.controller.query(interaction);
 
             if (!res || !res.returnCode.isSuccess())

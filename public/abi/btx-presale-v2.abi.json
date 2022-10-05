@@ -1,0 +1,452 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.62.0-nightly",
+            "commitHash": "f1f721e64014863f41c1a386b04af04c2de25321",
+            "commitDate": "2022-05-13",
+            "channel": "Nightly",
+            "short": "rustc 1.62.0-nightly (f1f721e64 2022-05-13)"
+        },
+        "contractCrate": {
+            "name": "btx-presale-v2",
+            "version": "0.0.0",
+            "git_version": "272d423-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.31.1"
+        }
+    },
+    "name": "OdinZorgPackIco",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "treasury_wallet",
+                "type": "Address"
+            },
+            {
+                "name": "token_id",
+                "type": "TokenIdentifier"
+            },
+            {
+                "name": "egld_price_rate",
+                "type": "BigUint"
+            },
+            {
+                "name": "token_price_rate",
+                "type": "BigUint"
+            },
+            {
+                "name": "start_timestamp",
+                "type": "u64"
+            },
+            {
+                "name": "end_timestamp",
+                "type": "u64"
+            },
+            {
+                "name": "min_buy_limit",
+                "type": "BigUint"
+            },
+            {
+                "name": "max_buy_limit",
+                "type": "BigUint"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "withdrawFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_nonce",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "viewPresale",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Presale"
+                }
+            ]
+        },
+        {
+            "name": "viewAccount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "caller",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Account"
+                }
+            ]
+        },
+        {
+            "name": "buy",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getTreasuryWallet",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "setTreasuryWallet",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "treasury_wallet",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "setTokenId",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEgldPriceRate",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getTokenPriceRate",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "setPriceRates",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "egld_price_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token_price_rate",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getStartTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "setStartTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "start_timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEndTimestamp",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "setEndTimestamp",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "end_timestamp",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getMinBuyLimit",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "setMinBuyLimit",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "min_buy_limit",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getMaxBuyLimit",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "setMaxBuyLimit",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "max_buy_limit",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                ""
+            ],
+            "name": "getWhitelist",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "addWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "removeWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "addresses",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "clearWhitelist",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getPaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "pause",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unpause",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getTotalBoughtAmountInEgld",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getTotalBoughtAmountInEsdt",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getBoughtAmountPerWallet",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<Address,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "Account": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "caller",
+                    "type": "Address"
+                },
+                {
+                    "name": "is_whitelisted",
+                    "type": "bool"
+                }
+            ]
+        },
+        "Presale": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "treasury_wallet",
+                    "type": "Address"
+                },
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "egld_price_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token_price_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "start_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "end_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "min_buy_limit",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "max_buy_limit",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "token_sale_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_bought_amount_in_egld",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_bought_amount_in_esdt",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

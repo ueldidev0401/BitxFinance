@@ -1,14 +1,23 @@
 import * as React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Countdown from 'react-countdown';
+import { getCurrentTimestamp } from 'utils';
 import { paddingTwoDigits } from '../../utils/convert';
 import './Time.scss';
 
 const Time = (props) => {
   const [leftTime, setTargetTimestamp] = React.useState<number>(60000);
   React.useEffect(() => {
-    setTargetTimestamp(props.saleStatus ? props.saleStatus.leftTimestamp - Date.now() : 60000);
-  }, [props.saleStatus]);
+    let leftTimestamp = 60000;
+    if (props && props.presale) {
+      if (props.presale.state == 'NotStarted') {
+        leftTimestamp = props.presale.start_timestamp - getCurrentTimestamp();
+      } else if (props.presale.state == 'Started') {
+        leftTimestamp = props.presale.end_timestamp - getCurrentTimestamp();
+      }
+    }
+    setTargetTimestamp(leftTimestamp);
+  }, [props.presale]);
 
   interface Props {
     days: number;

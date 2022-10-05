@@ -1,0 +1,86 @@
+.state-box {
+    padding: 20px 25px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(112, 112, 112, 0.3);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+}
+
+.staking-description {
+    width: 70%;
+    color: #707070;
+
+    @media (max-width: 576px) {
+        width: 100%;
+    }
+}
+
+.staking-card {
+    border: 1px solid #707070;
+    border-radius: 5px;
+    background: #262626;
+}
+
+.unstake-but {
+    padding: 5px;
+    background: #ecd09593;
+    border-radius: 3px;
+    color: black;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .3s all ease-in-out;
+    border: none;
+
+    &:hover {
+        background: rgba(128, 128, 128, 0.5);
+        color: white;
+    }
+}
+
+.unstake-but-disable {
+    padding: 5px;
+    background: gray;
+    border-radius: 3px;
+    color: black;
+    font-size: 12px;
+    cursor: not-allowed;
+}
+
+.claim-all {
+    color: #ECD095;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+        color: #05ab76;
+    }
+}
+
+.NFT-staking-logo {
+    width: 100%;
+
+    @media (max-width:768px) {
+        width: 60%;
+    }
+}
+
+.NFT-collection-table {
+    .responsiveTable th {
+        padding: 15px;
+        font-weight: 400;
+    }
+
+    .responsiveTable tr {
+        border-bottom: 1px solid rgba(112, 112, 112, 0.7);
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .responsiveTable td {
+        padding-left: 20px;
+    }
+}

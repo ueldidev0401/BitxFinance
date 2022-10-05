@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js/bignumber.js';
+import { Egld } from '@elrondnetwork/erdjs';
 import {
     ONE_DAY_IN_SECONDS
 } from '.';
@@ -6,8 +7,8 @@ import {
 
 function padTo2Digits(num: number) {
     return num.toString().padStart(2, '0');
-  }
-  
+}
+
 function formatDate(date: Date) {
     return [
         date.toLocaleString('default', { month: 'long' }),
@@ -30,6 +31,10 @@ export const convertSecondsToDays = (ts: number) => {
     return (ts / 86400);
 };
 
+export const convertTimestampToDays = (ts: number) => {
+    return precisionRound(ts / 86400000, 2);
+};
+
 export const convertUndefinedToZero = (v: any) => {
     return v ? v : 0;
 };
@@ -45,7 +50,7 @@ export const paddingTwoDigits = (num: any) => {
     });
 };
 
-export const precisionfloor = (number: number, precision = 4) => {
+export const precisionFloor = (number: number, precision = 4) => {
     const factor = Math.pow(10, precision);
     return Math.floor(number * factor) / factor;
 };
@@ -63,9 +68,9 @@ export const convertAPR2APY = (apr: number, periodInDays = 1) => {
     return Math.round(apy * factor) / factor;
 };
 
-export const convertWeiToEsdt = (v: any, decimals = 18, precision = 2) => {
+export const convertWeiToEsdt = (v: any, decimals = 18, precision = 4) => {
     // conversion for BigNumber operation
-    if (typeof(v) != typeof(BigNumber)) v = new BigNumber(v);
+    if (typeof (v) != typeof (BigNumber)) v = new BigNumber(v);
 
     const number = v.dividedBy(new BigNumber(Math.pow(10, decimals))).toNumber();
     const factor = Math.pow(10, precision);
@@ -77,7 +82,20 @@ export const convertEsdtToWei = (v: number, decimals = 18) => {
     return (new BigNumber(v)).multipliedBy(factor);
 };
 
+export const convertWeiToEgld = (v: any, precision = 4) => {
+    const factor = Math.pow(10, precision);
+    const number = parseFloat(Egld.raw(v).toDenominated());
+    return Math.floor(number * factor) / factor;
+};
+
 export const precisionRound = (number: number, precision = 4) => {
     const factor = Math.pow(10, precision);
     return Math.round(number * factor) / factor;
 };
+
+export function numberWithCommas(x: number) {
+    if (x === undefined) {
+        return "";
+    }
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

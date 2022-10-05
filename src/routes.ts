@@ -1,17 +1,24 @@
 import { dAppName } from 'config';
+import VaultVesting from 'pages/Vesting/vaultVesting';
 import withPageTitle from './components/PageTitle';
 import BTXFinanceHome from './pages';
+import NFTStaking from './pages/NFTStaking';
 import NFTMint from './pages/NFTMint';
 import PreSale from './pages/Presale';
 import StakingHome from './pages/Staking';
 import BitXStaking from './pages/Staking/BitXStaking';
+import CpaStaking from './pages/Staking/CpaStaking';
 import DiceStaking from './pages/Staking/DiceStaking';
 import HetoStaking from './pages/Staking/HetoStaking';
+import LpadStaking from './pages/Staking/LpadStaking';
 import MareStaking from './pages/Staking/MareStaking';
-
 import BitLock from './pages/Vesting';
 import CreateVesting from './pages/Vesting/createVesting';
-import VaultVesting from 'pages/Vesting/vaultVesting';
+import Farms from './pages/Farms';
+
+import IDOLaunchpad from 'pages/IDO';
+import IDODetail from 'pages/IDO/IDODetail';
+import createIDO from 'pages/IDO/createIDO';
 
 export const routeNames = {
   home: '/',
@@ -24,14 +31,22 @@ export const routeNames = {
   bitxstaking: '/btx-pool',
   dicestaking: '/dice-pool',
   marestaking: '/mare-pool',
-  hetostaking: '/heto-pool',
+  // hetostaking: '/heto-pool',
+  cpastaking: '/cpa-pool',
+  lpadstaking: '/lpad-pool',
 
   presale: '/presale',
   nftmint: '/nft-mint',
+  nftstaking: '/nft-staking',
 
   bitlock: '/bitlock',
   createvesting: '/bitlock/create-vesting',
-  vaultvesting: '/bitlock/vault-vesting'
+  vaultvesting: '/bitlock/vault-vesting/*',
+  farms: '/farms',
+
+  idolaunchpad: '/ido-launchpad',
+  idodetail: '/ido-detail/*',
+  createido: '/create-IDO'
 };
 
 const routes: Array<any> = [
@@ -39,12 +54,6 @@ const routes: Array<any> = [
     path: routeNames.staking,
     title: 'Staking',
     component: StakingHome
-  },
-
-  {
-    path: routeNames.presale,
-    title: 'PreSale',
-    component: PreSale
   },
 
   {
@@ -77,10 +86,22 @@ const routes: Array<any> = [
     component: MareStaking
   },
 
+  // {
+  //   path: routeNames.hetostaking,
+  //   title: 'Heto Pool',
+  //   component: HetoStaking
+  // },
+
   {
-    path: routeNames.hetostaking,
-    title: 'Heto Pool',
-    component: HetoStaking
+    path: routeNames.cpastaking,
+    title: 'Cpa Pool',
+    component: CpaStaking
+  },
+
+  {
+    path: routeNames.lpadstaking,
+    title: 'Lpad Pool',
+    component: LpadStaking
   },
 
   {
@@ -92,13 +113,50 @@ const routes: Array<any> = [
   {
     path: routeNames.createvesting,
     title: 'Create Vesting',
-    component: CreateVesting
+    component: CreateVesting,
+    authenticatedRoute: true,
   },
 
   {
     path: routeNames.vaultvesting,
     title: 'Vault Explorer',
     component: VaultVesting
+  },
+
+  {
+    path: routeNames.nftstaking,
+    title: 'NFT Staking',
+    component: NFTStaking
+  },
+
+  {
+    path: routeNames.farms,
+    title: 'Farms',
+    component: Farms
+  },
+
+  {
+    path: routeNames.presale,
+    title: 'PreSale',
+    component: PreSale
+  },
+
+  {
+    path: routeNames.idolaunchpad,
+    title: 'IDOLaunchpad',
+    component: IDOLaunchpad
+  },
+
+  {
+    path: routeNames.idodetail,
+    title: 'IDODetail',
+    component: IDODetail
+  },
+
+  {
+    path: routeNames.createido,
+    title: 'CreateIDO',
+    component: createIDO
   },
 ];
 

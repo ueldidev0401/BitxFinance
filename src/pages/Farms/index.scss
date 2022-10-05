@@ -1,0 +1,143 @@
+.farms-info-card {
+    background: #262626;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    padding: 20px 32px;
+    width: 640px;
+}
+
+.farm-card {
+    background: #2B2D2E;
+    padding: 20px 30px;
+    border-radius: 5px;
+}
+
+.farm-but {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background: #12A366;
+    color: white;
+    transition: .2s ease-in-out;
+
+    &:hover {
+        background: #12a36749;
+    }
+}
+
+.stake-but {
+    background: #1E2027;
+    border: 1px solid #05AB76;
+    color: #05AB76;
+
+    &:hover {
+        background: #12a3677c;
+        color: white;
+    }
+}
+
+.stake-input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    border: none;
+    padding: 8px 10px;
+    color: #D3D3D3;
+
+    &:hover,
+    &:focus {
+        outline: none;
+    }
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 500ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.ReactModal__Overlay--before-close {
+    opacity: 0;
+    transform: translateX(-100px);
+}
+
+.farm-stake-info {
+    background: #393435;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px 15px;
+}
+
+.stake-modal-ok-but {
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    
+    width: 100%;
+
+    background-image: linear-gradient(to bottom, #D1D179 0%, #8A8041 100%);
+    transition: .4s all ease-in-out;
+
+    &:hover {
+        background-image: linear-gradient(to bottom, #dbc874b4 0%, #867d55 100%);
+    }
+
+    &:disabled {
+        color: #fff !important;
+        border: none !important;
+        opacity: .5;
+        cursor: not-allowed !important;
+    }
+}
+
+.stake-modal-cancel-but {
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    
+    width: 100%;
+
+    background: #727272;
+    transition: .4s background-image ease-in-out;
+
+    &:hover {
+        background-image: linear-gradient(to bottom, #dbc874b4 0%, #867d55 100%);
+    }
+
+    &:disabled {
+        color: #fff !important;
+        border: none !important;
+        opacity: .5;
+        cursor: not-allowed !important;
+    }
+}
+
+.farm-modalcard {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 20vh auto;
+    padding: 40px;
+    background-color: #2B2D2E;
+    border-radius: 8px;
+    color: #D9D9D9;
+    font-family: 'Segoe UI';
+    z-index: 9999 !important;
+  }
+  
+  @media (max-width: 576px) {
+    .farm-modalcard {
+      margin: 12vh 1rem;
+    }
+  }

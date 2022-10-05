@@ -1,0 +1,1075 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.65.0-nightly",
+            "commitHash": "29e4a9ee0253cd39e552a77f51f11f9a5f1c41e6",
+            "commitDate": "2022-08-10",
+            "channel": "Nightly",
+            "short": "rustc 1.65.0-nightly (29e4a9ee0 2022-08-10)"
+        },
+        "contractCrate": {
+            "name": "bitx-ido",
+            "version": "0.0.0",
+            "git_version": "fed6cdd-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.31.1"
+        }
+    },
+    "docs": [
+        "One of the simplest smart contracts possible,",
+        "it holds a single variable in storage, which anyone can increment."
+    ],
+    "name": "BitxIdo",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "egld_price_rate",
+                "type": "BigUint"
+            },
+            {
+                "name": "fee_percent_as_fund_token1",
+                "type": "u32"
+            },
+            {
+                "name": "fee_percent_as_presale_token1",
+                "type": "u32"
+            },
+            {
+                "name": "fee_percent_as_fund_token2",
+                "type": "u32"
+            },
+            {
+                "name": "fee_percent_as_presale_token2",
+                "type": "u32"
+            },
+            {
+                "name": "min_percent_soft_cap",
+                "type": "u32"
+            },
+            {
+                "name": "maiar_router_address",
+                "type": "Address"
+            },
+            {
+                "name": "min_percent_maiar_exchange_liquidity",
+                "type": "u32"
+            },
+            {
+                "name": "max_percent_maiar_exchange_liquidity",
+                "type": "u32"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "create",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "project_presale_token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "project_presale_token_decimal",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_presale_token_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_fund_token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "project_fee_option_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_presale_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_soft_cap",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_hard_cap",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_min_buy_limit",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_max_buy_limit",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_maiar_liquidity_percent",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_maiar_listing_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_presale_start_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_presale_end_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_liquidity_lock_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_description",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_website",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_telegram",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_twitter",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_youtube",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_discord",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_linkedin",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_medium",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "buy",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getProjects",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "lived",
+                    "type": "bool"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Project>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getProject",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Project"
+                }
+            ]
+        },
+        {
+            "name": "getIdoInfo",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "IdoInfo"
+                }
+            ]
+        },
+        {
+            "name": "setEgldPriceRate",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "egld_price_rate",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addFeeOption",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee_percent_as_fund_token",
+                    "type": "u32"
+                },
+                {
+                    "name": "fee_percent_as_presale_token",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "changeFeeOption",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee_option_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "new_fee_percent_as_fund_token",
+                    "type": "u32"
+                },
+                {
+                    "name": "new_fee_percent_as_presale_token",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMinPercentSoftCap",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "min_percent_soft_cap",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMaiarRouterAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "maiar_router_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMinPercentMaiarExchangeLiquidity",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "min_percent_maiar_exchange_liquidity",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setMaxPercentMaiarExchangeLiquidity",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "max_percent_maiar_exchange_liquidity",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setProjectRemove",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setProjectLive",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdrawFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_nonce",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEgldPriceRate",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getLastFeeOptionId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getFeeOptionIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getFeePercentAsFundToken",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "fee_option_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getFeePercentAsPresaleToken",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "fee_option_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getMinPercentSoftCap",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getMaiarRouterAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getMinPercentMaiarExchangeLiquidity",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getMaxPercentMaiarExchangeLiquidity",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getLastProjectId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getProjectIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getProjectOwner",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getProjectPresaleTokenIdentifier",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getProjectFundTokenIdentifier",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getProjectFeeOptionId",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getProjectPresaleRate",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectCreateTime",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSoftCap",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectHardCap",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectMinBuyLimit",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectMaxBuyLimit",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectMaiarLiquidityPercent",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getProjectMaiarListingRate",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectPresaleStartTime",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getProjectPresaleEndTime",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getProjectLiquidityLockTimestamp",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getProjectDescription",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialWebsite",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialTelegram",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialTwitter",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialYoutube",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialDiscord",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialLinkedin",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectSocialMedium",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectTotalBoughtAmountInEgld",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectTotalBoughtAmountInEsdt",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getProjectPresaleTokenDecimal",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getProjectPresaleTokenName",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "getProjectIsLived",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "IdoInfo": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "egld_price_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "fee_percent_as_fund_token1",
+                    "type": "u32"
+                },
+                {
+                    "name": "fee_percent_as_presale_token1",
+                    "type": "u32"
+                },
+                {
+                    "name": "fee_percent_as_fund_token2",
+                    "type": "u32"
+                },
+                {
+                    "name": "fee_percent_as_presale_token2",
+                    "type": "u32"
+                },
+                {
+                    "name": "min_percent_soft_cap",
+                    "type": "u32"
+                },
+                {
+                    "name": "maiar_router_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "min_percent_maiar_exchange_liquidity",
+                    "type": "u32"
+                },
+                {
+                    "name": "max_percent_maiar_exchange_liquidity",
+                    "type": "u32"
+                }
+            ]
+        },
+        "Project": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "project_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_owner",
+                    "type": "Address"
+                },
+                {
+                    "name": "project_presale_token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "project_fund_token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "project_fee_option_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_presale_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_create_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_soft_cap",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_hard_cap",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_min_buy_limit",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_max_buy_limit",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_maiar_liquidity_percent",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_maiar_listing_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_presale_start_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_presale_end_time",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_liquidity_lock_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "project_description",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_telegram",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_website",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_twitter",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_youtube",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_discord",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_linkedin",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_social_medium",
+                    "type": "bytes"
+                },
+                {
+                    "name": "project_total_bought_amount_in_egld",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_total_bought_amount_in_esdt",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "project_is_lived",
+                    "type": "bool"
+                },
+                {
+                    "name": "project_presale_token_decimal",
+                    "type": "u32"
+                },
+                {
+                    "name": "project_presale_token_name",
+                    "type": "bytes"
+                }
+            ]
+        }
+    }
+}

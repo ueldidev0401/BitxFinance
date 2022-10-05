@@ -1,0 +1,141 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.62.0-nightly",
+            "commitHash": "69a5d2481e856a5a18885390b8cf6950b9ff8dd3",
+            "commitDate": "2022-04-27",
+            "channel": "Nightly",
+            "short": "rustc 1.62.0-nightly (69a5d2481 2022-04-27)"
+        },
+        "contractCrate": {
+            "name": "btx-convert",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.31.1"
+        }
+    },
+    "name": "BtxConvert",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "old_token_id",
+                "type": "TokenIdentifier"
+            },
+            {
+                "name": "new_token_id",
+                "type": "TokenIdentifier"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "convert",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "viewConvertSetting",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "ConvertSetting"
+                }
+            ]
+        },
+        {
+            "name": "getOldTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getNewTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getOldTokenAmount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getNewTokenAmount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "withdrawFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_nonce",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "ConvertSetting": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "old_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "new_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "old_token_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "new_token_amount",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

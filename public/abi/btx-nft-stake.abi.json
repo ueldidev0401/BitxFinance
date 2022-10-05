@@ -1,0 +1,397 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.62.0-nightly",
+            "commitHash": "f1f721e64014863f41c1a386b04af04c2de25321",
+            "commitDate": "2022-05-13",
+            "channel": "Nightly",
+            "short": "rustc 1.62.0-nightly (f1f721e64 2022-05-13)"
+        },
+        "contractCrate": {
+            "name": "btx-nft-stake",
+            "version": "0.0.0",
+            "git_version": "823090c-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.31.1"
+        }
+    },
+    "name": "BtxNftStake",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "lkmex_collection_id",
+                "type": "TokenIdentifier"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "withdrawFunds",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_token_id",
+                    "type": "optional<TokenIdentifier>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_nonce",
+                    "type": "optional<u64>",
+                    "multi_arg": true
+                },
+                {
+                    "name": "opt_token_amount",
+                    "type": "optional<BigUint>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "viewStakeSetting",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "StakeSetting"
+                }
+            ]
+        },
+        {
+            "name": "viewStakeAccount",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "StakeAccount"
+                }
+            ]
+        },
+        {
+            "name": "stake",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unstake",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "nft_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claim",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "nft_id",
+                    "type": "u32"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "injectReward",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getLkmexCollectionId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "setLkmexCollectionId",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "lkmex_collection_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getRewardRates",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<TokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "setRewardRates",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "items",
+                    "type": "variadic<multi<TokenIdentifier,BigUint>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getLkmexTokens",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<u64,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getStakedAmounts",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<TokenIdentifier,u32>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getNfts",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<u32,Nft>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getLastNftId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u32"
+                }
+            ]
+        },
+        {
+            "name": "getUserAddresses",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getNftIdsPerAddreess",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<u32>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getPaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "pause",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unpause",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "EsdtTokenPayment": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_type",
+                    "type": "EsdtTokenType"
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "EsdtTokenType": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Fungible",
+                    "discriminant": 0
+                },
+                {
+                    "name": "NonFungible",
+                    "discriminant": 1
+                },
+                {
+                    "name": "SemiFungible",
+                    "discriminant": 2
+                },
+                {
+                    "name": "Meta",
+                    "discriminant": 3
+                },
+                {
+                    "name": "Invalid",
+                    "discriminant": 4
+                }
+            ]
+        },
+        "Nft": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "nft_id",
+                    "type": "u32"
+                },
+                {
+                    "name": "owner",
+                    "type": "Address"
+                },
+                {
+                    "name": "collection_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "nft_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "reward_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "last_claimed_timestamp",
+                    "type": "u64"
+                }
+            ]
+        },
+        "NftCollection": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "collection_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "reward_rate",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "staked_amount",
+                    "type": "u32"
+                }
+            ]
+        },
+        "StakeAccount": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "nfts",
+                    "type": "List<Nft>"
+                }
+            ]
+        },
+        "StakeSetting": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "lkmex_collection_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "lkmex_total_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "lkmex_tokens",
+                    "type": "List<EsdtTokenPayment>"
+                },
+                {
+                    "name": "nft_collections",
+                    "type": "List<NftCollection>"
+                },
+                {
+                    "name": "total_staked_amount",
+                    "type": "u32"
+                },
+                {
+                    "name": "number_of_stakers",
+                    "type": "u32"
+                }
+            ]
+        }
+    }
+}
